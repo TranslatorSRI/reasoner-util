@@ -16,9 +16,9 @@ merge_categories = merge_iterables
 
 def get_preferred_ids(curies: List[str]):
     """Get list of preferred ids for a list of CURIES."""
-    params = {"curies": curies}
+    params = {"curie": curies}
     r = httpx.get("https://nodenormalization-sri-dev.renci.org/1.1/ \
-    get_normalized_nodes", params=params)
+        get_normalized_nodes", params=params)
     r_dict = r.json()
     preferred_ids = [r_dict[curie]['id']['identifier'] for curie in curies]
     return preferred_ids
