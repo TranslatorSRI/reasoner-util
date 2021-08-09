@@ -22,7 +22,10 @@ def get_preferred_ids(curies: List[str]) -> List[str]:
         params=params,
     )
     response_dict = response.json()
-    preferred_ids = [response_dict[curie]["id"]["identifier"] for curie in curies]
+    preferred_ids = [
+        response_dict[curie]["id"]["identifier"]
+        for curie in curies
+    ]
     return preferred_ids
 
 
