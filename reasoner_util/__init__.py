@@ -14,7 +14,7 @@ merge_ids = merge_iterables
 merge_categories = merge_iterables
 
 
-def get_preferred_ids(curies: List[str]):
+def get_preferred_ids(curies: List[str]) -> List[str]:
     """Get list of preferred ids for a list of CURIES."""
     params = {"curie": curies}
     response = httpx.get(
