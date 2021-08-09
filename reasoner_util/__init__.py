@@ -30,5 +30,5 @@ def normalize_ids(curies: List[str]) -> List[str]:
     """Normalize a list of ids by finding the BioLink prefered list of ids
     and stripping out any descendants"""
     normalized_ids = get_preferred_ids(curies)
-    # normalized_ids = strip_descendants(normalized_ids)
+    # TODO perform function that strips descendents from the curies list.
     return normalized_ids
