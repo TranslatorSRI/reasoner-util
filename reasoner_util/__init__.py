@@ -1,6 +1,9 @@
-"""Build merging functions."""
+"""Build merging and normalizing functions."""
 from typing import Hashable, Iterable, List, TypeVar
+from typing_extensions import Literal
 import httpx
+from bmt import Toolkit
+from pydantic import tools
 
 T = TypeVar("T", bound=Hashable)
 
@@ -35,3 +38,21 @@ def normalize_ids(curies: List[str]) -> List[str]:
     normalized_ids = get_preferred_ids(curies)
     # TODO perform function that strips descendents from the curies list.
     return normalized_ids
+
+
+def normalize_qcatagories(catagories: List[str]) -> List[str]:
+    """Normalize a list of catagories by stripping all descendents"""
+    normalized_catagories = strip_descendants(catagories)
+    return normalized_catagories
+
+
+def strip_descendants(item_list: List[str]) -> List[str]:
+    """strip descendants of biolink catagories or predicates"""
+    for x_item in item_list:
+        descendants = Toolkit.get_descendants(x_item, reflexive=False)
+        for y_item in item_list:
+            if y_item in descendants:
+                item_list.remove(y_item)
+            else:
+                pass
+    return item_list
