@@ -1,6 +1,7 @@
 """Test normalizing."""
 from reasoner_util import get_preferred_ids
-from reasoner_util import strip_descendants
+from reasoner_util import normalize_qcategories
+from reasoner_util import normalize_predicates
 
 
 def test_get_preferred_ids():
@@ -10,7 +11,7 @@ def test_get_preferred_ids():
     assert output == ["PUBCHEM.COMPOUND:962", "MONDO:0004976"]
 
 
-def test_strip_descendants():
+def test_normalize_qcategories():
     """Test normalize_qcatagories to test strip_descendants with
     the input of a list of catagories"""
     catagories = [
@@ -19,7 +20,22 @@ def test_strip_descendants():
         "biolink:ThingWithTaxon",
         "biolink:BiologicalEntity",
         "biolink:NamedThing",
-        "biolink:Entity"
+        "biolink:Entity",
       ]
-    output = strip_descendants(catagories)
+    output = normalize_qcategories(catagories)
     assert output == ["biolink:ThingWithTaxon", "biolink:Entity"]
+
+
+def test_normalize_predicates():
+    """Test normalize_predicates to test strip_descendants with
+    the input of a list of predicates"""
+    predicates = [
+        "biolink:related_to",
+        "biolink:interacts_with",
+        "biolink:increases_abundance_of",
+        "biolink:genetically_interacts_with",
+        "biolink:affects_mutation_rate_of",
+        "biolink:affects_folding_of",
+      ]
+    output = normalize_predicates(predicates)
+    assert output == ["biolink:related_to"]
