@@ -46,6 +46,12 @@ def normalize_qcategories(catagories: List[str]) -> List[str]:
     return normalized_catagories
 
 
+def normalize_predicates(predicates: List[str]) -> List[str]:
+    """Normalize a list of predicates by stripping all descendents"""
+    normalized_predicates = strip_descendants(predicates)
+    return normalized_predicates
+
+
 tk = Toolkit()
 
 
