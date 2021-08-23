@@ -55,15 +55,13 @@ tk = Toolkit()
 
 def strip_descendants(items: List[str]) -> List[str]:
     """strip descendants of biolink catagories or predicates"""
-    working_items = items.copy()
-    for item in items:
-        descendants = tk.get_descendants(
-            item,
-            reflexive=False,
-            formatted=True,
-        )
-        for descendant in descendants:
-            if descendant in working_items:
-                working_items.remove(descendant)
-    stripped_items = working_items
-    return stripped_items
+    descendants = {
+        descendant
+        for item in items 
+        for descendant in tk.get_descendants(item, reflexive=False, formatted=True,)
+        }
+    return [
+        item
+        for item in items
+        if item not in descendants
+    ]
