@@ -55,17 +55,17 @@ def normalize_predicates(predicates: List[str]) -> List[str]:
 tk = Toolkit()
 
 
-def strip_descendants(item_list: List[str]) -> List[str]:
+def strip_descendants(items: List[str]) -> List[str]:
     """strip descendants of biolink catagories or predicates"""
-    working_list = item_list.copy()
-    for x_item in item_list:
+    working_items = items.copy()
+    for x_item in items:
         descendants = tk.get_descendants(
             x_item,
             reflexive=False,
             formatted=True,
         )
         for desnd in descendants:
-            if desnd in working_list:
-                working_list.remove(desnd)
-    stripped_list = working_list
+            if desnd in working_items:
+                working_items.remove(desnd)
+    stripped_list = working_items
     return stripped_list
