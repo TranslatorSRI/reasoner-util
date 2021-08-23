@@ -13,7 +13,8 @@ def test_get_preferred_ids():
 
 def test_normalize_qcategories():
     """Test normalize_qcatagories to test strip_descendants with
-    the input of a list of catagories"""
+    the input of a list of catagories. Note that this test assumes that the
+    order of elements in the input does not change"""
     catagories = [
         "biolink:Disease",
         "biolink:DiseaseOrPhenotypicFeature",
