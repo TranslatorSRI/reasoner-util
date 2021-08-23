@@ -1,9 +1,7 @@
 """Build merging and normalizing functions."""
 from typing import Hashable, Iterable, List, TypeVar
-from typing_extensions import Literal
 import httpx
 from bmt import Toolkit
-from pydantic import tools
 
 T = TypeVar("T", bound=Hashable)
 
@@ -58,14 +56,14 @@ tk = Toolkit()
 def strip_descendants(items: List[str]) -> List[str]:
     """strip descendants of biolink catagories or predicates"""
     working_items = items.copy()
-    for x_item in items:
+    for item in items:
         descendants = tk.get_descendants(
-            x_item,
+            item,
             reflexive=False,
             formatted=True,
         )
-        for desnd in descendants:
-            if desnd in working_items:
-                working_items.remove(desnd)
-    stripped_list = working_items
-    return stripped_list
+        for descendant in descendants:
+            if descendant in working_items:
+                working_items.remove(descendant)
+    stripped_items = working_items
+    return stripped_items
