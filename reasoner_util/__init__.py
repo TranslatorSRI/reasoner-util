@@ -62,7 +62,7 @@ def strip_descendants(items: List[str]) -> List[str]:
             item,
             reflexive=False,
             formatted=True,
-            )
+        )
         }
     return [
         item
