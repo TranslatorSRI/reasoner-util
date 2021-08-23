@@ -57,8 +57,12 @@ def strip_descendants(items: List[str]) -> List[str]:
     """strip descendants of biolink catagories or predicates"""
     descendants = {
         descendant
-        for item in items 
-        for descendant in tk.get_descendants(item, reflexive=False, formatted=True,)
+        for item in items
+        for descendant in tk.get_descendants(
+            item,
+            reflexive=False,
+            formatted=True,
+            )
         }
     return [
         item
