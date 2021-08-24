@@ -69,3 +69,21 @@ def strip_descendants(items: List[str]) -> List[str]:
         for item in items
         if item not in descendants
     ]
+
+
+def map_normalized_node_ids(message_dict: dict):
+    """Create a query node mapping to the original ids and
+    the new normalized ids."""
+    nodes = message_dict["message"]["query_graph"]["nodes"]
+    nodes_map = {}
+    for node in nodes:
+        ids = message_dict["message"]["query_graph"]["nodes"][node]["ids"]
+        if ids is not None:
+            nodes_map[node] = ids
+        else:
+            nodes_map[node] = []
+    output = {
+        node: {"input_ids": ids, "normalized_ids": normalize_ids(ids)}
+        for (node, ids) in nodes_map.items()
+    }
+    return output
