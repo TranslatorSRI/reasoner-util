@@ -4,6 +4,7 @@ from reasoner_util import get_preferred_ids
 from reasoner_util import normalize_qcategories
 from reasoner_util import normalize_predicates
 from reasoner_util import map_normalized_node_ids
+from reasoner_util import get_all_curies
 
 
 def test_get_preferred_ids():
@@ -42,6 +43,26 @@ def test_normalize_predicates():
       ]
     output = normalize_predicates(predicates)
     assert output == ["biolink:related_to"]
+
+
+def test_get_all_curies():
+    """"Test get_all_curies"""
+    with open("tests/trapi_message.json", "r") as file:
+        message_dict = json.load(file)
+    output = get_all_curies(message_dict)
+    correct_output = [
+        "CHEBI:15377",
+        "GO:0043508",
+        "GO:1901222",
+        "GO:0002480",
+        "GO:0002485",
+        "GO:0002486",
+        "GO:0070433",
+        "GO:2001198",
+        "GO:0042277",
+        "NCBIGene:60412",
+    ]
+    assert output == correct_output
 
 
 def test_map_normalized_node_ids():
