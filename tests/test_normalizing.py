@@ -3,7 +3,6 @@ import json
 from reasoner_util import get_preferred_ids
 from reasoner_util import normalize_qcategories
 from reasoner_util import normalize_predicates
-from reasoner_util import map_normalized_node_ids
 from reasoner_util import get_all_curies
 
 
@@ -73,21 +72,3 @@ def test_get_all_curies():
         "GO:0005515",
     ]
     assert output == correct_output
-
-
-def test_map_normalized_node_ids():
-    """Test map_normalized_node_ids"""
-    with open("tests/trapi_message.json", "r") as file:
-        message = json.load(file)
-    map_dict = map_normalized_node_ids(message)
-    correct_output = {
-        "n0": {
-            "input_ids": ["CHEBI:15377"],
-            "normalized_ids": ["PUBCHEM.COMPOUND:962"]
-        },
-        "n1": {
-            "input_ids": [],
-            "normalized_ids": []
-        }
-    }
-    assert map_dict == correct_output
