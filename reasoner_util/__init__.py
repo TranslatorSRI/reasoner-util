@@ -87,6 +87,11 @@ def get_all_curies(message_dict: dict) -> List[str]:
         message_dict["message"]["knowledge_graph"]["nodes"].keys()
     )
     all_curies += kgraph_ids
+    results = message_dict["message"]["results"]
+    for result in results:
+        for rnode in result["node_bindings"]:
+            for entry in result["node_bindings"][rnode]:
+                all_curies.append(entry["id"])
     return all_curies
 
 
