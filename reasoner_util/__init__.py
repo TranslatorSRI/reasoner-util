@@ -2,6 +2,7 @@
 from typing import Hashable, Iterable, List, TypeVar
 import httpx
 from bmt import Toolkit
+import json
 
 T = TypeVar("T", bound=Hashable)
 
@@ -71,9 +72,27 @@ def strip_descendants(items: List[str]) -> List[str]:
     ]
 
 
+def get_all_curies(message_dict: dict) -> List[str]:
+    """Grab all curies from the trapi message. The output will
+    be a list of lists"""
+    all_curies = []
+    query_nodes = message_dict["message"]["query_graph"]["nodes"]
+    for qnode in query_nodes:
+        ids = message_dict["message"]["query_graph"]["nodes"][qnode]["ids"]
+        if ids is not None:
+            all_curies += ids
+        else:
+            all_curies += []
+    kgraph_ids = list(
+        message_dict["message"]["knowledge_graph"]["nodes"].keys()
+    )
+    all_curies += kgraph_ids
+    return all_curies
+
+
 def map_normalized_node_ids(message_dict: dict):
     """Create a query node mapping to the original ids and
-    the new normalized ids. Output includes the node, input ids, 
+    the new normalized ids. Output includes the node, input ids,
     and the ids after normalization"""
     nodes = message_dict["message"]["query_graph"]["nodes"]
     nodes_map = {}
