@@ -73,7 +73,8 @@ def strip_descendants(items: List[str]) -> List[str]:
 
 def map_normalized_node_ids(message_dict: dict):
     """Create a query node mapping to the original ids and
-    the new normalized ids."""
+    the new normalized ids. Output includes the node, input ids, 
+    and the ids after normalization"""
     nodes = message_dict["message"]["query_graph"]["nodes"]
     nodes_map = {}
     for node in nodes:
