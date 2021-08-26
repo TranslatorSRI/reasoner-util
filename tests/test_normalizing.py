@@ -61,6 +61,16 @@ def test_get_all_curies():
         "GO:2001198",
         "GO:0042277",
         "NCBIGene:60412",
+        "NCBIGene:3106",
+        "GO:0006955",
+        "NCBIGene:3106",
+        "GO:0002250",
+        "NCBIGene:3106",
+        "GO:0005515",
+        "NCBIGene:3105",
+        "GO:0006955",
+        "NCBIGene:3105",
+        "GO:0005515",
     ]
     assert output == correct_output
 
