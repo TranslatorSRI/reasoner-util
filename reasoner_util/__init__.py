@@ -2,7 +2,6 @@
 from typing import Hashable, Iterable, List, TypeVar
 import httpx
 from bmt import Toolkit
-import json
 
 T = TypeVar("T", bound=Hashable)
 
@@ -93,3 +92,12 @@ def get_all_curies(message_dict: dict) -> List[str]:
             for entry in result["node_bindings"][rnode]:
                 all_curies.append(entry["id"])
     return all_curies
+
+
+def map_ids(original_ids: List[str], normalized_ids: List[str]) -> dict:
+    """Map normalized curies(ids) to the original curies
+    from the trapi message"""
+    return {
+        original_id: normalized_ids[i]
+        for i, original_id in enumerate(original_ids)
+    }
