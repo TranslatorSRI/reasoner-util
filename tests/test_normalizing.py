@@ -4,6 +4,7 @@ from reasoner_util import get_preferred_ids
 from reasoner_util import normalize_qcategories
 from reasoner_util import normalize_predicates
 from reasoner_util import get_all_curies
+from reasoner_util import map_ids
 
 
 def test_get_preferred_ids():
@@ -71,4 +72,76 @@ def test_get_all_curies():
         "NCBIGene:3105",
         "GO:0005515",
     ]
+    assert output == correct_output
+
+
+def test_map_curies():
+    """Test map_curies"""
+    original_ids = [
+        "CHEBI:15377",
+        "GO:0043508",
+        "GO:1901222",
+        "GO:0002480",
+        "GO:0002485",
+        "GO:0002486",
+        "GO:0070433",
+        "GO:2001198",
+        "GO:0042277",
+        "NCBIGene:60412",
+        "NCBIGene:3106",
+        "GO:0006955",
+        "NCBIGene:3106",
+        "GO:0002250",
+        "NCBIGene:3106",
+        "GO:0005515",
+        "NCBIGene:3105",
+        "GO:0006955",
+        "NCBIGene:3105",
+        "GO:0005515",
+    ]
+    normalized_ids = [
+        "PUBCHEM.COMPOUND:962",
+        "GO:0043508",
+        "GO:1901222",
+        "GO:0002480",
+        "GO:0002485",
+        "GO:0002486",
+        "GO:0070433",
+        "GO:2001198",
+        "GO:0042277",
+        "NCBIGene:60412",
+        "NCBIGene:3106",
+        "GO:0006955",
+        "NCBIGene:3106",
+        "GO:0002250",
+        "NCBIGene:3106",
+        "GO:0005515",
+        "NCBIGene:3105",
+        "GO:0006955",
+        "NCBIGene:3105",
+        "GO:0005515",
+    ]
+    output = map_ids(original_ids, normalized_ids)
+    correct_output = {
+        "CHEBI:15377": "PUBCHEM.COMPOUND:962",
+        "GO:0043508": "GO:0043508",
+        "GO:1901222": "GO:1901222",
+        "GO:0002480": "GO:0002480",
+        "GO:0002485": "GO:0002485",
+        "GO:0002486": "GO:0002486",
+        "GO:0070433": "GO:0070433",
+        "GO:2001198": "GO:2001198",
+        "GO:0042277": "GO:0042277",
+        "NCBIGene:60412": "NCBIGene:60412",
+        "NCBIGene:3106": "NCBIGene:3106",
+        "GO:0006955": "GO:0006955",
+        # "NCBIGene:3106": "NCBIGene:3106",
+        "GO:0002250": "GO:0002250",
+        # "NCBIGene:3106": "NCBIGene:3106",
+        "GO:0005515": "GO:0005515",
+        "NCBIGene:3105": "NCBIGene:3105",
+        # "GO:0006955": "GO:0006955",
+        # "NCBIGene:3105": "NCBIGene:3105",
+        # "GO:0005515": "GO:0005515"
+    }
     assert output == correct_output
