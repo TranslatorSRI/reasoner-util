@@ -135,13 +135,8 @@ def test_map_curies():
         "NCBIGene:60412": "NCBIGene:60412",
         "NCBIGene:3106": "NCBIGene:3106",
         "GO:0006955": "GO:0006955",
-        # "NCBIGene:3106": "NCBIGene:3106",
         "GO:0002250": "GO:0002250",
-        # "NCBIGene:3106": "NCBIGene:3106",
         "GO:0005515": "GO:0005515",
         "NCBIGene:3105": "NCBIGene:3105",
-        # "GO:0006955": "GO:0006955",
-        # "NCBIGene:3105": "NCBIGene:3105",
-        # "GO:0005515": "GO:0005515"
     }
     assert output == correct_output
