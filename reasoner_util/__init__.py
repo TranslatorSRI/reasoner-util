@@ -98,6 +98,6 @@ def map_ids(original_ids: List[str], normalized_ids: List[str]) -> dict:
     """Map normalized curies(ids) to the original curies
     from the trapi message"""
     return {
-        original_id: normalized_ids[i]
-        for i, original_id in enumerate(original_ids)
+        original_id: normalized_id
+        for original_id, normalized_id in zip(original_ids, normalized_ids)
     }
