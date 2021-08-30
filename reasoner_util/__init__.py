@@ -2,6 +2,7 @@
 from typing import Hashable, Iterable, List, TypeVar
 import httpx
 from bmt import Toolkit
+import json
 
 T = TypeVar("T", bound=Hashable)
 
@@ -101,3 +102,12 @@ def map_ids(original_ids: List[str], normalized_ids: List[str]) -> dict:
         original_id: normalized_id
         for original_id, normalized_id in zip(original_ids, normalized_ids)
     }
+
+
+def apply_ids(id_map: dict, message_dict: dict):
+    """Apply id map to message dictionary"""
+    message_string = json.dumps(message_dict)
+    for original_id in id_map:
+        normalized_id = id_map[original_id]
+        message_string.replace(original_id, normalized_id)
+    return json.loads(message_string)
