@@ -5,6 +5,7 @@ from reasoner_util import normalize_qcategories
 from reasoner_util import normalize_predicates
 from reasoner_util import get_all_curies
 from reasoner_util import map_ids
+from reasoner_util import apply_ids
 
 
 def test_get_preferred_ids():
@@ -139,4 +140,31 @@ def test_map_curies():
         "GO:0005515": "GO:0005515",
         "NCBIGene:3105": "NCBIGene:3105",
     }
+    assert output == correct_output
+
+
+def test_apply_ids():
+    """Test apply_ids"""
+    with open("tests/trapi_message.json", "r") as file:
+        message_dict = json.load(file)
+    id_map = {
+        "CHEBI:15377": "PUBCHEM.COMPOUND:962",
+        "GO:0043508": "GO:0043508",
+        "GO:1901222": "GO:1901222",
+        "GO:0002480": "GO:0002480",
+        "GO:0002485": "GO:0002485",
+        "GO:0002486": "GO:0002486",
+        "GO:0070433": "GO:0070433",
+        "GO:2001198": "GO:2001198",
+        "GO:0042277": "GO:0042277",
+        "NCBIGene:60412": "NCBIGene:60412",
+        "NCBIGene:3106": "NCBIGene:3106",
+        "GO:0006955": "GO:0006955",
+        "GO:0002250": "GO:0002250",
+        "GO:0005515": "GO:0005515",
+        "NCBIGene:3105": "NCBIGene:3105",
+    }
+    output = apply_ids(id_map, message_dict)
+    with open("tests/correct_apply_ids_output.json", "r") as file:
+        correct_output = json.load(file)
     assert output == correct_output
