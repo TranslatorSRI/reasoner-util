@@ -2,7 +2,6 @@
 from typing import Hashable, Iterable, List, TypeVar
 import httpx
 from bmt import Toolkit
-import json
 
 T = TypeVar("T", bound=Hashable)
 
@@ -106,8 +105,20 @@ def map_ids(original_ids: List[str], normalized_ids: List[str]) -> dict:
 
 def apply_ids(id_map: dict, message_dict: dict):
     """Apply id map to message dictionary"""
-    message_string = json.dumps(message_dict)
-    for original_id in id_map:
-        normalized_id = id_map[original_id]
-        message_string.replace(original_id, normalized_id)
-    return json.loads(message_string)
+    query_nodes = message_dict["message"]["query_graph"]["nodes"]
+    for qnode in query_nodes:
+        ids = message_dict["message"]["query_graph"]["nodes"][qnode]["ids"]
+        if ids is not None:
+            for item in ids:
+                item = id_map[item]
+        else:
+            pass
+    kgraph_nodes = message_dict["message"]["knowledge_graph"]["nodes"]
+    for node in kgraph_nodes:
+        node = id_map[node]
+    results = message_dict["message"]["results"]
+    for result in results:
+        for rnode in result["node_bindings"]:
+            for entry in result["node_bindings"][rnode]:
+                entry["id"] = id_map[entry["id"]]
+    return message_dict
