@@ -48,30 +48,19 @@ def test_normalize_predicates():
 
 def test_get_all_curies():
     """"Test get_all_curies"""
-    with open("tests/trapi_message.json", "r") as file:
+    with open("tests/test_apply_ids.json", "r") as file:
         message_dict = json.load(file)
     output = get_all_curies(message_dict)
+    print(output)
     correct_output = [
+        "MESH:D003837",
+        "EFO:0001645",
+        "NCIT:C34424",
+        "UMLS:C0003469",
+        "UMLS:C0003469",
+        "NCIT:C34424",
+        "MESH:D003837",
         "CHEBI:15377",
-        "GO:0043508",
-        "GO:1901222",
-        "GO:0002480",
-        "GO:0002485",
-        "GO:0002486",
-        "GO:0070433",
-        "GO:2001198",
-        "GO:0042277",
-        "NCBIGene:60412",
-        "NCBIGene:3106",
-        "GO:0006955",
-        "NCBIGene:3106",
-        "GO:0002250",
-        "NCBIGene:3106",
-        "GO:0005515",
-        "NCBIGene:3105",
-        "GO:0006955",
-        "NCBIGene:3105",
-        "GO:0005515",
     ]
     assert output == correct_output
 
@@ -80,65 +69,28 @@ def test_map_curies():
     """Test map_curies"""
     original_ids = [
         "CHEBI:15377",
-        "GO:0043508",
-        "GO:1901222",
-        "GO:0002480",
-        "GO:0002485",
-        "GO:0002486",
-        "GO:0070433",
-        "GO:2001198",
-        "GO:0042277",
-        "NCBIGene:60412",
-        "NCBIGene:3106",
-        "GO:0006955",
-        "NCBIGene:3106",
-        "GO:0002250",
-        "NCBIGene:3106",
-        "GO:0005515",
-        "NCBIGene:3105",
-        "GO:0006955",
-        "NCBIGene:3105",
-        "GO:0005515",
+        "MESH:D003837",
+        "EFO:0001645",
+        "NCIT:C34424",
+        "UMLS:C0003469",
+        "EFO:1001454",
     ]
     normalized_ids = [
         "PUBCHEM.COMPOUND:962",
-        "GO:0043508",
-        "GO:1901222",
-        "GO:0002480",
-        "GO:0002485",
-        "GO:0002486",
-        "GO:0070433",
-        "GO:2001198",
-        "GO:0042277",
-        "NCBIGene:60412",
-        "NCBIGene:3106",
-        "GO:0006955",
-        "NCBIGene:3106",
-        "GO:0002250",
-        "NCBIGene:3106",
-        "GO:0005515",
-        "NCBIGene:3105",
-        "GO:0006955",
-        "NCBIGene:3105",
-        "GO:0005515",
+        "CHEBI:23639",
+        "MONDO:0005010",
+        "MONDO:0024613",
+        "MONDO:0005618",
+        "EFO:1001454",
     ]
     output = map_ids(original_ids, normalized_ids)
     correct_output = {
         "CHEBI:15377": "PUBCHEM.COMPOUND:962",
-        "GO:0043508": "GO:0043508",
-        "GO:1901222": "GO:1901222",
-        "GO:0002480": "GO:0002480",
-        "GO:0002485": "GO:0002485",
-        "GO:0002486": "GO:0002486",
-        "GO:0070433": "GO:0070433",
-        "GO:2001198": "GO:2001198",
-        "GO:0042277": "GO:0042277",
-        "NCBIGene:60412": "NCBIGene:60412",
-        "NCBIGene:3106": "NCBIGene:3106",
-        "GO:0006955": "GO:0006955",
-        "GO:0002250": "GO:0002250",
-        "GO:0005515": "GO:0005515",
-        "NCBIGene:3105": "NCBIGene:3105",
+        "MESH:D003837": "CHEBI:23639",
+        "EFO:0001645": "MONDO:0005010",
+        "NCIT:C34424": "MONDO:0024613",
+        "UMLS:C0003469": "MONDO:0005618",
+        "EFO:1001454": "EFO:1001454",
     }
     assert output == correct_output
 
