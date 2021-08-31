@@ -1,0 +1,152 @@
+{
+    "message": {
+      "query_graph": {
+        "nodes": {
+          "n0": {
+            "ids": [
+                "CHEBI:23639"
+            ],
+            "name": "",
+            "categories": []
+            },
+          "n1": {
+            "ids": null,
+            "name": "",
+            "categories": []
+          }
+        },
+        "edges": {
+          "e0": {
+            "subject": "n1",
+            "object": "n0",
+            "predicates": [
+              "biolink:has_participant"
+            ],
+            "relation": null,
+            "constraints": null
+          }
+        }
+      },
+      "knowledge_graph": {
+        "nodes": {
+          "MONDO:0005010": {
+            "categories": [
+            ],
+            "name": "",
+            "attributes": [
+              {
+                "attribute_type_id": "",
+                "value": [],
+                "value_type_id": "EDAM:data_0006",
+                "original_attribute_name": "synonyms",
+                "value_url": null,
+                "attribute_source": null,
+                "description": null
+              }
+            ]
+          },
+          "MONDO:0024613": {
+            "categories": [
+            ],
+            "name": "",
+            "attributes": [
+              {
+                "attribute_type_id": "biolink:Attribute",
+                "value": [],
+                "value_type_id": "EDAM:data_0006",
+                "original_attribute_name": "synonyms",
+                "value_url": null,
+                "attribute_source": null,
+                "description": null
+              }
+            ]
+          },
+          "MONDO:0005618": {
+            "categories": [],
+            "name": "",
+            "attributes": [
+              {
+                "attribute_type_id": "biolink:Attribute",
+                "value": [],
+                "value_type_id": "EDAM:data_0006",
+                "original_attribute_name": "synonyms",
+                "value_url": null,
+                "attribute_source": null,
+                "description": null
+              }
+            ]
+          }
+        },
+        "edges": {
+          "e2ba64c1eb8c874a5a6d9ca98e22f34c": {
+            "subject": "MONDO:0005010",
+            "object": "MONDO:0024613",
+            "predicate": "biolink:actively_involved_in",
+            "relation": null,
+            "attributes": [
+              {
+                "attribute_type_id": "biolink:Attribute",
+                "value": [],
+                "value_type_id": "EDAM:data_0006",
+                "original_attribute_name": "relation_label",
+                "value_url": null,
+                "attribute_source": null,
+                "description": null
+              }
+            ]
+          },
+          "ab6273692e7bc0497ee2dcb174c2593d": {
+            "subject": "MONDO:0024613",
+            "object": "MONDO:0005618",
+            "predicate": "biolink:enabled_by",
+            "relation": null,
+            "attributes": [
+              {
+                "attribute_type_id": "biolink:Attribute",
+                "value": [],
+                "value_type_id": "EDAM:data_0006",
+                "original_attribute_name": "relation_label",
+                "value_url": null,
+                "attribute_source": null,
+                "description": null
+              }
+            ]
+          }
+        }
+      },
+      "results": [
+        {
+          "node_bindings": {
+            "n0": [
+              {
+                "id": "MONDO:0005618"
+              }
+            ],
+            "n1": [
+              {
+                "id": "MONDO:0024613"
+              }
+            ]
+          },
+          "edge_bindings": {},
+          "score": 1.2679491924311235
+        },
+        {
+          "node_bindings": {
+            "n0": [
+              {
+                "id": "CHEBI:23639"
+              }
+            ],
+            "n1": [
+              {
+                "id": "PUBCHEM.COMPOUND:962"
+              }
+            ]
+          },
+          "edge_bindings": {},
+          "score": 1.2679491924311235
+        }
+      ]
+    }
+  }
