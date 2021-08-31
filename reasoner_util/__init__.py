@@ -105,19 +105,26 @@ def map_ids(original_ids: List[str], normalized_ids: List[str]) -> dict:
 
 def apply_ids(id_map: dict, message_dict: dict):
     """Apply id map to message dictionary"""
-    query_nodes = message_dict["message"]["query_graph"]["nodes"]
-    for qnode in query_nodes:
-        ids = message_dict["message"]["query_graph"]["nodes"][qnode]["ids"]
-        if ids is not None:
-            for item in ids:
-                item = id_map[item]
+    for qnode in message_dict["message"]["query_graph"]["nodes"]:
+        if message_dict["message"]["query_graph"]["nodes"][qnode]["ids"] is not None:
+            message_dict["message"]["query_graph"]["nodes"][qnode]["ids"] = [
+                id_map[item]
+                for item in message_dict[
+                    "message"
+                ]["query_graph"]["nodes"][qnode]["ids"]
+            ]
         else:
             pass
-    kgraph_nodes = message_dict["message"]["knowledge_graph"]["nodes"]
-    for node in kgraph_nodes:
-        node = id_map[node]
-    results = message_dict["message"]["results"]
-    for result in results:
+    for node in message_dict["message"]["knowledge_graph"]["nodes"]:
+        message_dict["message"]["knowledge_graph"]["nodes"][
+            id_map[node]
+        ] = message_dict["message"]["knowledge_graph"]["nodes"].pop(node)
+    for edge in message_dict["message"]["knowledge_graph"]["edges"]:
+        e_subject = message_dict["message"]["knowledge_graph"]["edges"][edge]["subject"]
+        e_object = message_dict["message"]["knowledge_graph"]["edges"][edge]["object"]
+        message_dict["message"]["knowledge_graph"]["edges"][edge]["subject"] = id_map[e_subject]
+        message_dict["message"]["knowledge_graph"]["edges"][edge]["object"] = id_map[e_object]
+    for result in message_dict["message"]["results"]:
         for rnode in result["node_bindings"]:
             for entry in result["node_bindings"][rnode]:
                 entry["id"] = id_map[entry["id"]]
