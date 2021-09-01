@@ -108,24 +108,24 @@ def apply_ids(id_map: dict, message_dict: dict):
     qgraph = message_dict["message"]["query_graph"]
     kgraph = message_dict["message"]["knowledge_graph"]
 
-    for qnode in qgraph["nodes"]:
-        if qgraph["nodes"][qnode]["ids"] is None:
+    for qnode in qgraph["nodes"].values():
+        if qnode["ids"] is None:
             continue
-        qgraph["nodes"][qnode]["ids"] = [
+        qnode["ids"] = [
             id_map[item]
-            for item in qgraph["nodes"][qnode]["ids"]
+            for item in qnode["ids"]
         ]
     for node in kgraph["nodes"]:
         kgraph["nodes"][
             id_map[node]
         ] = kgraph["nodes"].pop(node)
-    for edge in kgraph["edges"]:
-        e_subject = kgraph["edges"][edge]["subject"]
-        e_object = kgraph["edges"][edge]["object"]
-        kgraph["edges"][edge]["subject"] = id_map[e_subject]
-        kgraph["edges"][edge]["object"] = id_map[e_object]
+    for edge in kgraph["edges"].values():
+        e_subject = edge["subject"]
+        e_object = edge["object"]
+        edge["subject"] = id_map[e_subject]
+        edge["object"] = id_map[e_object]
     for result in message_dict["message"]["results"]:
-        for rnode in result["node_bindings"]:
-            for entry in result["node_bindings"][rnode]:
+        for rnode in result["node_bindings"].values():
+            for entry in rnode:
                 entry["id"] = id_map[entry["id"]]
     return message_dict
