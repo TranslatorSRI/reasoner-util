@@ -109,13 +109,12 @@ def apply_ids(id_map: dict, message_dict: dict):
     kgraph = message_dict["message"]["knowledge_graph"]
 
     for qnode in qgraph["nodes"]:
-        if qgraph["nodes"][qnode]["ids"] is not None:
-            qgraph["nodes"][qnode]["ids"] = [
-                id_map[item]
-                for item in qgraph["nodes"][qnode]["ids"]
-            ]
-        else:
-            pass
+        if qgraph["nodes"][qnode]["ids"] is None:
+            continue
+        qgraph["nodes"][qnode]["ids"] = [
+            id_map[item]
+            for item in qgraph["nodes"][qnode]["ids"]
+        ]
     for node in kgraph["nodes"]:
         kgraph["nodes"][
             id_map[node]
