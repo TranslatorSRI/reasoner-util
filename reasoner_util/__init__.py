@@ -105,25 +105,26 @@ def map_ids(original_ids: List[str], normalized_ids: List[str]) -> dict:
 
 def apply_ids(id_map: dict, message_dict: dict):
     """Apply id map to message dictionary"""
-    for qnode in message_dict["message"]["query_graph"]["nodes"]:
-        if message_dict["message"]["query_graph"]["nodes"][qnode]["ids"] is not None:
-            message_dict["message"]["query_graph"]["nodes"][qnode]["ids"] = [
+    qgraph = message_dict["message"]["query_graph"]
+    kgraph = message_dict["message"]["knowledge_graph"]
+
+    for qnode in qgraph["nodes"]:
+        if qgraph["nodes"][qnode]["ids"] is not None:
+            qgraph["nodes"][qnode]["ids"] = [
                 id_map[item]
-                for item in message_dict[
-                    "message"
-                ]["query_graph"]["nodes"][qnode]["ids"]
+                for item in qgraph["nodes"][qnode]["ids"]
             ]
         else:
             pass
-    for node in message_dict["message"]["knowledge_graph"]["nodes"]:
-        message_dict["message"]["knowledge_graph"]["nodes"][
+    for node in kgraph["nodes"]:
+        kgraph["nodes"][
             id_map[node]
-        ] = message_dict["message"]["knowledge_graph"]["nodes"].pop(node)
-    for edge in message_dict["message"]["knowledge_graph"]["edges"]:
-        e_subject = message_dict["message"]["knowledge_graph"]["edges"][edge]["subject"]
-        e_object = message_dict["message"]["knowledge_graph"]["edges"][edge]["object"]
-        message_dict["message"]["knowledge_graph"]["edges"][edge]["subject"] = id_map[e_subject]
-        message_dict["message"]["knowledge_graph"]["edges"][edge]["object"] = id_map[e_object]
+        ] = kgraph["nodes"].pop(node)
+    for edge in kgraph["edges"]:
+        e_subject = kgraph["edges"][edge]["subject"]
+        e_object = kgraph["edges"][edge]["object"]
+        kgraph["edges"][edge]["subject"] = id_map[e_subject]
+        kgraph["edges"][edge]["object"] = id_map[e_object]
     for result in message_dict["message"]["results"]:
         for rnode in result["node_bindings"]:
             for entry in result["node_bindings"][rnode]:
