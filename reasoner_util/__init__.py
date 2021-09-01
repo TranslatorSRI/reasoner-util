@@ -120,10 +120,8 @@ def apply_ids(id_map: dict, message_dict: dict):
             id_map[node]
         ] = kgraph["nodes"].pop(node)
     for edge in kgraph["edges"].values():
-        e_subject = edge["subject"]
-        e_object = edge["object"]
-        edge["subject"] = id_map[e_subject]
-        edge["object"] = id_map[e_object]
+        edge["subject"] = id_map[edge["subject"]]
+        edge["object"] = id_map[edge["object"]]
     for result in message_dict["message"]["results"]:
         for rnode in result["node_bindings"].values():
             for entry in rnode:
