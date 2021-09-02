@@ -97,12 +97,23 @@ def get_all_curies(message_dict: dict) -> List[str]:
     return all_curies
 
 
-def get_all_qpredicates(message_dict: dict) -> dict:
-    """Get all predicates in the query graph from the message dictionary"""
+def get_qpredicates(message_dict: dict) -> dict:
+    """Get all predicates in the query graph from the message
+    dictionary"""
     edges = message_dict["message"]["query_graph"]["edges"]
     return {
         edge_name: edges[edge_name]["predicates"]
         for edge_name in edges.keys()
+    }
+
+
+def get_qcategories(message_dict: dict) -> dict:
+    """Get categories for each node in query graph from the
+    message dictionary"""
+    qnodes = message_dict["message"]["query_graph"]["nodes"]
+    return {
+        qnode_name: qnodes[qnode_name]["categories"]
+        for qnode_name in qnodes.keys()
     }
 
 
