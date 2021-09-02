@@ -6,7 +6,8 @@ from reasoner_util import normalize_qpredicates
 from reasoner_util import get_all_curies
 from reasoner_util import map_ids
 from reasoner_util import apply_ids
-from reasoner_util import get_all_qpredicates
+from reasoner_util import get_qpredicates
+from reasoner_util import get_qcategories
 
 
 def test_get_preferred_ids():
@@ -68,11 +69,11 @@ def test_get_all_curies():
     assert output == correct_output
 
 
-def test_get_all_qpredicates():
+def test_get_qpredicates():
     """Test get_all_qpredicates"""
     with open("tests/test_get_qpredicates_qcategories.json") as file:
         message_dict = json.load(file)
-    output = get_all_qpredicates(message_dict)
+    output = get_qpredicates(message_dict)
     correct_output = {
         "e0": [
             "biolink:related_to",
@@ -93,18 +94,58 @@ def test_get_all_qpredicates():
             "biolink:has_phenotype",
             "biolink:causes_adverse_event",
             "biolink:molecularly_interacts_with",
-        ],
-        "e4": [
-            "biolink:related_to",
-            "biolink:version_of",
-            "biolink:contributor",
         ]
     }
     assert output == correct_output
 
 
-def test_map_curies():
-    """Test map_curies"""
+def test_get_qcategories():
+    """Test get_qcategories"""
+    with open("tests/test_get_qpredicates_qcategories.json") as file:
+        message_dict = json.load(file)
+    output = get_qcategories(message_dict)
+    correct_output = {
+        "n0": [
+            "biolink:ChemicalSubstance",
+            "biolink:MolecularEntity",
+            "biolink:BiologicalEntity",
+            "biolink:NamedThing",
+            "biolink:Entity",
+        ],
+        "n1": [
+            "biolink:Disease",
+            "biolink:DiseaseOrPhenotypicFeature",
+            "biolink:BiologicalEntity",
+            "biolink:NamedThing",
+            "biolink:Entity",
+        ],
+        "n2": [
+            "biolink:Disease",
+            "biolink:DiseaseOrPhenotypicFeature",
+            "biolink:BiologicalEntity",
+            "biolink:NamedThing",
+            "biolink:Entity",
+        ],
+        "n3": [
+            "biolink:Disease",
+            "biolink:DiseaseOrPhenotypicFeature",
+            "biolink:BiologicalEntity",
+            "biolink:NamedThing",
+            "biolink:Entity"
+        ],
+        "n4": [
+            "biolink:Disease",
+            "biolink:DiseaseOrPhenotypicFeature",
+            "biolink:BiologicalEntity",
+            "biolink:NamedThing",
+            "biolink:Entity",
+        ]
+    }
+    assert output == correct_output
+
+
+def test_map_ids():
+    """Test map_ids"""
     original_ids = [
         "CHEBI:15377",
         "MESH:D003837",
