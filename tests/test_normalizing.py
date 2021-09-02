@@ -2,10 +2,11 @@
 import json
 from reasoner_util import get_preferred_ids
 from reasoner_util import normalize_qcategories
-from reasoner_util import normalize_predicates
+from reasoner_util import normalize_qpredicates
 from reasoner_util import get_all_curies
 from reasoner_util import map_ids
 from reasoner_util import apply_ids
+from reasoner_util import get_all_qpredicates
 
 
 def test_get_preferred_ids():
@@ -31,19 +32,21 @@ def test_normalize_qcategories():
     assert output == ["biolink:ThingWithTaxon", "biolink:Entity"]
 
 
-def test_normalize_predicates():
+def test_normalize_qpredicates():
     """Test normalize_predicates to test strip_descendants with
     the input of a list of predicates"""
-    predicates = [
-        "biolink:related_to",
-        "biolink:interacts_with",
-        "biolink:increases_abundance_of",
-        "biolink:genetically_interacts_with",
-        "biolink:affects_mutation_rate_of",
-        "biolink:affects_folding_of",
-      ]
-    output = normalize_predicates(predicates)
-    assert output == ["biolink:related_to"]
+    predicates = {
+        "e0": [
+            "biolink:related_to",
+            "biolink:interacts_with",
+            "biolink:increases_abundance_of",
+            "biolink:genetically_interacts_with",
+            "biolink:affects_mutation_rate_of",
+            "biolink:affects_folding_of",
+        ]
+    }
+    output = normalize_qpredicates(predicates)
+    assert output == {"e0": ["biolink:related_to"]}
 
 
 def test_get_all_curies():
@@ -62,6 +65,41 @@ def test_get_all_curies():
         "MESH:D003837",
         "CHEBI:15377",
     ]
+    assert output == correct_output
+
+
+def test_get_all_qpredicates():
+    """Test get_all_qpredicates"""
+    with open("tests/test_get_qpredicates_qcategories.json") as file:
+        message_dict = json.load(file)
+    output = get_all_qpredicates(message_dict)
+    correct_output = {
+        "e0": [
+            "biolink:related_to",
+            "biolink:actively_involved_in",
+            "biolink:enabled_by",
+        ],
+        "e1": [
+            "biolink:affects_abundance_of",
+            "biolink:increases_abundance_of",
+            "biolink:has_phenotype",
+        ],
+        "e2": [
+            "biolink:affects_expression_of",
+            "biolink:decreases_expression_of",
+            "biolink:increases_expression_of"
+        ],
+        "e3": [
+            "biolink:has_phenotype",
+            "biolink:causes_adverse_event",
+            "biolink:molecularly_interacts_with",
+        ],
+        "e4": [
+            "biolink:related_to",
+            "biolink:version_of",
+            "biolink:contributor",
+        ]
+    }
     assert output == correct_output
 
 
