@@ -44,10 +44,13 @@ def normalize_qcategories(catagories: List[str]) -> List[str]:
     return normalized_catagories
 
 
-def normalize_predicates(predicates: List[str]) -> List[str]:
-    """Normalize a list of predicates by stripping all descendents"""
-    normalized_predicates = strip_descendants(predicates)
-    return normalized_predicates
+def normalize_qpredicates(predicates: dict) -> dict:
+    """Normalize a dictionary of a list of predicates for each edge
+    by stripping all descendents in each list of predicates"""
+    return {
+        edge_name: strip_descendants(predicates[edge_name])
+        for edge_name in predicates.keys()
+    }
 
 
 tk = Toolkit()
@@ -92,6 +95,15 @@ def get_all_curies(message_dict: dict) -> List[str]:
             for entry in result["node_bindings"][rnode]:
                 all_curies.append(entry["id"])
     return all_curies
+
+
+def get_all_qpredicates(message_dict: dict) -> dict:
+    """Get all predicates in the query graph from the message dictionary"""
+    edges = message_dict["message"]["query_graph"]["edges"]
+    return {
+        edge_name: edges[edge_name]["predicates"]
+        for edge_name in edges.keys()
+    }
 
 
 def map_ids(original_ids: List[str], normalized_ids: List[str]) -> dict:
