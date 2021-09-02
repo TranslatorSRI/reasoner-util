@@ -38,10 +38,12 @@ def normalize_ids(curies: List[str]) -> List[str]:
     return normalized_ids
 
 
-def normalize_qcategories(catagories: List[str]) -> List[str]:
+def normalize_qcategories(categories: dict) -> dict:
     """Normalize a list of catagories by stripping all descendents"""
-    normalized_catagories = strip_descendants(catagories)
-    return normalized_catagories
+    return {
+        node_name: strip_descendants(categories[node_name])
+        for node_name in categories.keys()
+    }
 
 
 def normalize_qpredicates(predicates: dict) -> dict:
