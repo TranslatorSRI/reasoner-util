@@ -21,16 +21,18 @@ def test_normalize_qcategories():
     """Test normalize_qcatagories to test strip_descendants with
     the input of a list of catagories. Note that this test assumes that the
     order of elements in the input does not change"""
-    catagories = [
-        "biolink:Disease",
-        "biolink:DiseaseOrPhenotypicFeature",
-        "biolink:ThingWithTaxon",
-        "biolink:BiologicalEntity",
-        "biolink:NamedThing",
-        "biolink:Entity",
-      ]
+    catagories = {
+        "n0": [
+            "biolink:Disease",
+            "biolink:DiseaseOrPhenotypicFeature",
+            "biolink:ThingWithTaxon",
+            "biolink:BiologicalEntity",
+            "biolink:NamedThing",
+            "biolink:Entity",
+        ]
+      }
     output = normalize_qcategories(catagories)
-    assert output == ["biolink:ThingWithTaxon", "biolink:Entity"]
+    assert output == {"n0": ["biolink:ThingWithTaxon", "biolink:Entity"]}
 
 
 def test_normalize_qpredicates():
