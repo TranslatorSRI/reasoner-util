@@ -186,8 +186,6 @@ def test_apply_ids():
         "UMLS:C0003469": "MONDO:0005618"
     }
     output = apply_ids(id_map, message_dict)
-    with open("tests/data_file.json", "w") as write_file:
-        json.dump(output, write_file)
     with open("tests/test_apply_ids_success.json", "r") as file:
         correct_output = json.load(file)
     assert output == correct_output
