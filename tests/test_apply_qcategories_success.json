@@ -1,0 +1,91 @@
+{
+    "message": {
+      "query_graph": {
+        "nodes": {
+          "n0": {
+            "name": "deoxy sugar",
+            "categories": [
+              "biolink:Entity"
+            ],
+            "ids": [
+              "CHEBI:23639"
+            ]
+          },
+          "n1": {
+            "name": "coronary artery disease",
+            "categories": [
+              "biolink:Entity"
+            ],
+            "ids": [
+              "MONDO:0005010"
+            ]
+          },
+          "n2": {
+            "name": "bipolar depression",
+            "categories": [
+              "biolink:Entity"
+            ],
+            "ids": [
+              "MONDO:0024613"
+            ]
+          },
+          "n3": {
+            "name": "anxiety disorder",
+            "categories": [
+              "biolink:Entity"
+            ],
+            "ids": [
+              "MONDO:0005618"
+            ]
+          },
+          "n4": {
+            "name": "amnesia",
+            "categories": [
+              "biolink:Entity"
+            ],
+            "ids": [
+              "EFO:1001454"
+            ]
+          }
+        },
+        "edges": {
+          "e0": {
+            "subject": "n0",
+            "object": "n1",
+            "predicates": [
+              "biolink:related_to",
+              "biolink:actively_involved_in",
+              "biolink:enabled_by"
+            ]
+          },
+          "e1": {
+            "subject": "n1",
+            "object": "n2",
+            "predicates": [
+                "biolink:affects_abundance_of",
+                "biolink:increases_abundance_of",
+                "biolink:has_phenotype"
+            ]
+          },
+          "e2": {
+            "subject": "n2",
+            "object": "n3",
+            "predicates": [
+                "biolink:affects_expression_of",
+                "biolink:decreases_expression_of",
+                "biolink:increases_expression_of"
+            ]
+          },
+          "e3": {
+            "subject": "n3",
+            "object": "n4",
+            "predicates": [
+                "biolink:has_phenotype",
+                "biolink:causes_adverse_event",
+                "biolink:molecularly_interacts_with"
+            ]
+          }
+        }
+      }
+    }
+  }
