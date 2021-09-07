@@ -6,6 +6,7 @@ from reasoner_util import normalize_qpredicates
 from reasoner_util import get_all_curies
 from reasoner_util import map_ids
 from reasoner_util import apply_ids
+from reasoner_util import strip_descendants
 
 
 def test_get_preferred_ids():
@@ -15,10 +16,22 @@ def test_get_preferred_ids():
     assert output == ["PUBCHEM.COMPOUND:962", "MONDO:0004976"]
 
 
+def test_strip_descendants():
+    """Test strip_descendants"""
+    items = [
+         "biolink:Disease",
+         "biolink:DiseaseOrPhenotypicFeature",
+         "biolink:BiologicalEntity",
+         "biolink:NamedThing",
+         "biolink:Entity",
+     ]
+    output = strip_descendants(items)
+    correct_output = ["biolink:Entity"]
+    assert output == correct_output
+
+
 def test_normalize_qcategories():
-    """Test normalize_qcatagories to test strip_descendants with
-    the input of a list of catagories. Note that this test assumes that the
-    order of elements in the input does not change"""
+    """Test normalize_qcatagories"""
     with open("tests/test_get_qpredicates_qcategories.json", "r") as file:
         message_dict = json.load(file)
     output = normalize_qcategories(message_dict)
@@ -30,8 +43,7 @@ def test_normalize_qcategories():
 
 
 def test_normalize_qpredicates():
-    """Test normalize_predicates to test strip_descendants with
-    the input of a list of predicates"""
+    """Test normalize_predicates"""
     with open("tests/test_get_qpredicates_qcategories.json", "r") as file:
         message_dict = json.load(file)
     output = normalize_qpredicates(message_dict)
