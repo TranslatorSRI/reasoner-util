@@ -38,21 +38,22 @@ def normalize_ids(curies: List[str]) -> List[str]:
     return normalized_ids
 
 
-def normalize_qcategories(categories: dict) -> dict:
-    """Normalize a list of catagories by stripping all descendents"""
-    return {
-        node_name: strip_descendants(categories[node_name])
-        for node_name in categories.keys()
-    }
+def normalize_qcategories(message_dict: dict) -> dict:
+    """Normalize categories for each node in the query graph by stripping
+    all descendants, and output an updated message"""
+    q_nodes = message_dict["message"]["query_graph"]["nodes"]
+    for q_node in q_nodes.values():
+        q_node["categories"] = strip_descendants(q_node["categories"])
+    return message_dict
 
 
-def normalize_qpredicates(predicates: dict) -> dict:
-    """Normalize a dictionary of a list of predicates for each edge
-    by stripping all descendents in each list of predicates"""
-    return {
-        edge_name: strip_descendants(predicates[edge_name])
-        for edge_name in predicates.keys()
-    }
+def normalize_qpredicates(message_dict: dict) -> dict:
+    """Normalize predicates for each edge in the query graph by stripping
+    all descendants, and output the updated message"""
+    q_edges = message_dict["message"]["query_graph"]["edges"]
+    for q_edge in q_edges.values():
+        q_edge["predicates"] = strip_descendants(q_edge["predicates"])
+    return message_dict
 
 
 tk = Toolkit()
@@ -97,26 +98,6 @@ def get_all_curies(message_dict: dict) -> List[str]:
             for entry in result["node_bindings"][rnode]:
                 all_curies.append(entry["id"])
     return all_curies
-
-
-def get_qpredicates(message_dict: dict) -> dict:
-    """Get all predicates in the query graph from the message
-    dictionary"""
-    edges = message_dict["message"]["query_graph"]["edges"]
-    return {
-        edge_name: edges[edge_name]["predicates"]
-        for edge_name in edges.keys()
-    }
-
-
-def get_qcategories(message_dict: dict) -> dict:
-    """Get categories for each node in query graph from the
-    message dictionary"""
-    qnodes = message_dict["message"]["query_graph"]["nodes"]
-    return {
-        qnode_name: qnodes[qnode_name]["categories"]
-        for qnode_name in qnodes.keys()
-    }
 
 
 def map_ids(original_ids: List[str], normalized_ids: List[str]) -> dict:
