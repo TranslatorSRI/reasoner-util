@@ -75,6 +75,24 @@ def strip_descendants(items: List[str]) -> List[str]:
     ]
 
 
+def strip_ancestors(items: List[str]) -> List[str]:
+    """strip ancestors of biolink categories or predicates"""
+    ancestors = {
+        ancestor
+        for item in items
+        for ancestor in tk.get_ancestors(
+            item,
+            reflexive=False,
+            formatted=True,
+        )
+    }
+    return [
+        item
+        for item in items
+        if item not in ancestors
+    ]
+
+
 def get_all_ids(message_dict: dict) -> List[str]:
     """Grab all ids from the trapi message. The output will
     be a list of lists"""
