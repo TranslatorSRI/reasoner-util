@@ -1,0 +1,95 @@
+{
+    "message": {
+      "query_graph": {
+        "nodes": {
+            "n0": {
+              "name": "deoxy sugar",
+              "categories": [
+              ],
+              "ids": [
+                "CHEBI:23639"
+              ]
+            },
+            "n1": {
+              "name": "coronary artery disease",
+              "categories": [
+              ],
+              "ids": [
+                "MONDO:0005010"
+              ]
+            }
+        },
+        "edges": {
+          "e0": {
+            "subject": "n1",
+            "object": "n0",
+            "predicates": [
+              "biolink:related_to"
+            ],
+            "relation": null,
+            "constraints": null
+          }
+        }
+      },
+      "knowledge_graph": {
+        "nodes": {
+          "CHEBI:23639": {
+            "categories": [
+                "biolink:ChemicalSubstance"
+            ],
+            "name": "deoxy sugar",
+            "attributes": [
+              {
+                "attribute_type_id": "",
+                "value": [],
+                "value_type_id": "EDAM:data_0006",
+                "original_attribute_name": "synonyms",
+                "value_url": null,
+                "attribute_source": null,
+                "description": null
+              }
+            ]
+          },
+          "MONDO:0005010": {
+            "categories": [
+                "biolink:Disease"
+            ],
+            "name": "coronary artery disease",
+            "attributes": [
+              {
+                "attribute_type_id": "biolink:Attribute",
+                "value": [],
+                "value_type_id": "EDAM:data_0006",
+                "original_attribute_name": "synonyms",
+                "value_url": null,
+                "attribute_source": null,
+                "description": null
+              }
+            ]
+          }
+        },
+        "edges": {
+          "e2ba64c1eb8c874a5a6d9ca98e22f34c": {
+            "subject": "CHEBI:23639",
+            "object": "MONDO:0005010",
+            "predicate": "biolink:actively_involved_in",
+            "relation": null,
+            "attributes": [
+              {
+                "attribute_type_id": "biolink:Attribute",
+                "value": [],
+                "value_type_id": "EDAM:data_0006",
+                "original_attribute_name": "relation_label",
+                "value_url": null,
+                "attribute_source": null,
+                "description": null
+              }
+            ]
+          }
+        }
+      },
+      "results": [
+
+      ]
+    }
+  }
