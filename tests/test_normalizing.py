@@ -7,6 +7,7 @@ from reasoner_util import get_all_ids
 from reasoner_util import map_ids
 from reasoner_util import apply_ids
 from reasoner_util import strip_descendants
+from reasoner_util import strip_ancestors
 
 
 def test_get_preferred_ids():
@@ -27,6 +28,20 @@ def test_strip_descendants():
      ]
     output = strip_descendants(items)
     correct_output = ["biolink:Entity"]
+    assert output == correct_output
+
+
+def test_strip_ancestors():
+    """Test strip_ancestors"""
+    input = [
+         "biolink:Disease",
+         "biolink:DiseaseOrPhenotypicFeature",
+         "biolink:BiologicalEntity",
+         "biolink:NamedThing",
+         "biolink:Entity",
+    ]
+    output = strip_ancestors(input)
+    correct_output = ["biolink:Disease"]
     assert output == correct_output
 
 
