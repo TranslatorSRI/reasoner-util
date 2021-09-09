@@ -48,11 +48,11 @@ def test_strip_ancestors():
 
 def test_normalize_qcategories():
     """Test normalize_qcatagories"""
-    with open("tests/test_get_qpredicates_qcategories.json", "r") as file:
+    with open("tests/test_jsons/test_qpredicates_qcategories.json", "r") as file:
         message_dict = json.load(file)
     normalize_qcategories(message_dict)
 
-    with open("tests/test_apply_qcategories_success.json") as file:
+    with open("tests/test_jsons/test_qcategories_success.json") as file:
         correct_output = json.load(file)
 
     assert message_dict == correct_output
@@ -60,11 +60,11 @@ def test_normalize_qcategories():
 
 def test_normalize_qpredicates():
     """Test normalize_predicates"""
-    with open("tests/test_get_qpredicates_qcategories.json", "r") as file:
+    with open("tests/test_jsons/test_qpredicates_qcategories.json", "r") as file:
         message_dict = json.load(file)
     normalize_qpredicates(message_dict)
 
-    with open("tests/test_apply_qpredicates_success.json") as file:
+    with open("tests/test_jsons/test_qpredicates_success.json") as file:
         correct_output = json.load(file)
 
     assert message_dict == correct_output
@@ -72,17 +72,17 @@ def test_normalize_qpredicates():
 
 def test_normalize_kcategories():
     """Test normalize_kcatagories"""
-    with open("tests/test_get_kcategories.json", "r") as file:
+    with open("tests/test_jsons/test_kcategories.json", "r") as file:
         message_dict = json.load(file)
     normalize_kcategories(message_dict)
-    with open("tests/test_apply_kcategories_success.json") as file:
+    with open("tests/test_jsons/test_kcategories_success.json") as file:
         correct_output = json.load(file)
     assert message_dict == correct_output
 
 
 def test_get_all_ids():
     """"Test get_all_ids"""
-    with open("tests/test_apply_ids.json", "r") as file:
+    with open("tests/test_jsons/test_ids.json", "r") as file:
         message_dict = json.load(file)
     output = get_all_ids(message_dict)
     print(output)
@@ -131,7 +131,7 @@ def test_map_ids():
 
 def test_apply_ids():
     """Test apply_ids"""
-    with open("tests/test_apply_ids.json", "r") as file:
+    with open("tests/test_jsons/test_ids.json", "r") as file:
         message_dict = json.load(file)
     id_map = {
         "CHEBI:15377": "PUBCHEM.COMPOUND:962",
@@ -141,6 +141,6 @@ def test_apply_ids():
         "UMLS:C0003469": "MONDO:0005618"
     }
     apply_ids(id_map, message_dict)
-    with open("tests/test_apply_ids_success.json", "r") as file:
+    with open("tests/test_jsons/test_ids_success.json", "r") as file:
         correct_output = json.load(file)
     assert message_dict == correct_output
