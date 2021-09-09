@@ -77,27 +77,27 @@ def strip_descendants(items: List[str]) -> List[str]:
     ]
 
 
-def get_all_curies(message_dict: dict) -> List[str]:
-    """Grab all curies from the trapi message. The output will
+def get_all_ids(message_dict: dict) -> List[str]:
+    """Grab all ids from the trapi message. The output will
     be a list of lists"""
-    all_curies = []
+    all_ids = []
     query_nodes = message_dict["message"]["query_graph"]["nodes"]
     for qnode in query_nodes:
         ids = message_dict["message"]["query_graph"]["nodes"][qnode]["ids"]
         if ids is not None:
-            all_curies += ids
+            all_ids += ids
         else:
-            all_curies += []
+            all_ids += []
     kgraph_ids = list(
         message_dict["message"]["knowledge_graph"]["nodes"].keys()
     )
-    all_curies += kgraph_ids
+    all_ids += kgraph_ids
     results = message_dict["message"]["results"]
     for result in results:
         for rnode in result["node_bindings"]:
             for entry in result["node_bindings"][rnode]:
-                all_curies.append(entry["id"])
-    return all_curies
+                all_ids.append(entry["id"])
+    return all_ids
 
 
 def map_ids(original_ids: List[str], normalized_ids: List[str]) -> dict:
