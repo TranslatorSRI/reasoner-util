@@ -38,22 +38,22 @@ def normalize_ids(curies: List[str]) -> List[str]:
     return normalized_ids
 
 
-def normalize_qcategories(message_dict: dict) -> dict:
+def normalize_qcategories(message_dict: dict) -> None:
     """Normalize categories for each node in the query graph by stripping
-    all descendants, and output an updated message"""
+    all descendants. Modify the message in place."""
     q_nodes = message_dict["message"]["query_graph"]["nodes"]
     for q_node in q_nodes.values():
         q_node["categories"] = strip_descendants(q_node["categories"])
-    return message_dict
+    return
 
 
-def normalize_qpredicates(message_dict: dict) -> dict:
+def normalize_qpredicates(message_dict: dict) -> None:
     """Normalize predicates for each edge in the query graph by stripping
-    all descendants, and output the updated message"""
+    all descendants. Modify the message in place."""
     q_edges = message_dict["message"]["query_graph"]["edges"]
     for q_edge in q_edges.values():
         q_edge["predicates"] = strip_descendants(q_edge["predicates"])
-    return message_dict
+    return
 
 
 tk = Toolkit()
@@ -109,8 +109,8 @@ def map_ids(original_ids: List[str], normalized_ids: List[str]) -> dict:
     }
 
 
-def apply_ids(id_map: dict, message_dict: dict):
-    """Apply id map to message dictionary"""
+def apply_ids(id_map: dict, message_dict: dict) -> None:
+    """Apply id map to message dictionary. Modify the message in place."""
     qgraph = message_dict["message"]["query_graph"]
     kgraph = message_dict["message"]["knowledge_graph"]
 
@@ -132,4 +132,4 @@ def apply_ids(id_map: dict, message_dict: dict):
         for rnode in result["node_bindings"].values():
             for entry in rnode:
                 entry["id"] = id_map[entry["id"]]
-    return message_dict
+    return
