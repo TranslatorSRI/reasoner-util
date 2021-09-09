@@ -3,7 +3,7 @@ import json
 from reasoner_util import get_preferred_ids
 from reasoner_util import normalize_qcategories
 from reasoner_util import normalize_qpredicates
-from reasoner_util import get_all_curies
+from reasoner_util import get_all_ids
 from reasoner_util import map_ids
 from reasoner_util import apply_ids
 from reasoner_util import strip_descendants
@@ -54,11 +54,11 @@ def test_normalize_qpredicates():
     assert message_dict == correct_output
 
 
-def test_get_all_curies():
-    """"Test get_all_curies"""
+def test_get_all_ids():
+    """"Test get_all_ids"""
     with open("tests/test_apply_ids.json", "r") as file:
         message_dict = json.load(file)
-    output = get_all_curies(message_dict)
+    output = get_all_ids(message_dict)
     print(output)
     correct_output = [
         "MESH:D003837",
