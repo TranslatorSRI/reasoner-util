@@ -54,6 +54,14 @@ def normalize_qpredicates(message_dict: dict) -> None:
         q_edge["predicates"] = strip_descendants(q_edge["predicates"])
 
 
+def normalize_kcategories(message_dict: dict) -> None:
+    """Normalize categories for each node in the knowledge graph by stripping
+    all ancestors. Modify the message in place."""
+    k_nodes = message_dict["message"]["knowledge_graph"]["nodes"]
+    for k_node in k_nodes.values():
+        k_node["categories"] = strip_ancestors(k_node["categories"])
+
+
 tk = Toolkit()
 
 
