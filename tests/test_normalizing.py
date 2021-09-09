@@ -8,6 +8,7 @@ from reasoner_util import map_ids
 from reasoner_util import apply_ids
 from reasoner_util import strip_descendants
 from reasoner_util import strip_ancestors
+from reasoner_util import normalize_kcategories
 
 
 def test_get_preferred_ids():
@@ -33,14 +34,14 @@ def test_strip_descendants():
 
 def test_strip_ancestors():
     """Test strip_ancestors"""
-    input = [
+    items = [
          "biolink:Disease",
          "biolink:DiseaseOrPhenotypicFeature",
          "biolink:BiologicalEntity",
          "biolink:NamedThing",
          "biolink:Entity",
     ]
-    output = strip_ancestors(input)
+    output = strip_ancestors(items)
     correct_output = ["biolink:Disease"]
     assert output == correct_output
 
@@ -66,6 +67,16 @@ def test_normalize_qpredicates():
     with open("tests/test_apply_qpredicates_success.json") as file:
         correct_output = json.load(file)
 
+    assert message_dict == correct_output
+
+
+def test_normalize_kcategories():
+    """Test normalize_kcatagories"""
+    with open("tests/test_get_kcategories.json", "r") as file:
+        message_dict = json.load(file)
+    normalize_kcategories(message_dict)
+    with open("tests/test_apply_kcategories_success.json") as file:
+        correct_output = json.load(file)
     assert message_dict == correct_output
 
 
