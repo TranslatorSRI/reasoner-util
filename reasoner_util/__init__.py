@@ -44,7 +44,6 @@ def normalize_qcategories(message_dict: dict) -> None:
     q_nodes = message_dict["message"]["query_graph"]["nodes"]
     for q_node in q_nodes.values():
         q_node["categories"] = strip_descendants(q_node["categories"])
-    return
 
 
 def normalize_qpredicates(message_dict: dict) -> None:
@@ -53,7 +52,6 @@ def normalize_qpredicates(message_dict: dict) -> None:
     q_edges = message_dict["message"]["query_graph"]["edges"]
     for q_edge in q_edges.values():
         q_edge["predicates"] = strip_descendants(q_edge["predicates"])
-    return
 
 
 tk = Toolkit()
@@ -132,4 +130,3 @@ def apply_ids(id_map: dict, message_dict: dict) -> None:
         for rnode in result["node_bindings"].values():
             for entry in rnode:
                 entry["id"] = id_map[entry["id"]]
-    return
