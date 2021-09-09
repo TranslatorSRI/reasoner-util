@@ -34,24 +34,24 @@ def test_normalize_qcategories():
     """Test normalize_qcatagories"""
     with open("tests/test_get_qpredicates_qcategories.json", "r") as file:
         message_dict = json.load(file)
-    output = normalize_qcategories(message_dict)
+    normalize_qcategories(message_dict)
 
     with open("tests/test_apply_qcategories_success.json") as file:
         correct_output = json.load(file)
 
-    assert output == correct_output
+    assert message_dict == correct_output
 
 
 def test_normalize_qpredicates():
     """Test normalize_predicates"""
     with open("tests/test_get_qpredicates_qcategories.json", "r") as file:
         message_dict = json.load(file)
-    output = normalize_qpredicates(message_dict)
+    normalize_qpredicates(message_dict)
 
     with open("tests/test_apply_qpredicates_success.json") as file:
         correct_output = json.load(file)
 
-    assert output == correct_output
+    assert message_dict == correct_output
 
 
 def test_get_all_curies():
@@ -114,7 +114,7 @@ def test_apply_ids():
         "NCIT:C34424": "MONDO:0024613",
         "UMLS:C0003469": "MONDO:0005618"
     }
-    output = apply_ids(id_map, message_dict)
+    apply_ids(id_map, message_dict)
     with open("tests/test_apply_ids_success.json", "r") as file:
         correct_output = json.load(file)
-    assert output == correct_output
+    assert message_dict == correct_output
