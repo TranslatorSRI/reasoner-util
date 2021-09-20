@@ -1,5 +1,6 @@
 """Build merging and normalizing functions."""
 from typing import Hashable, Iterable, List, TypeVar
+import copy
 import httpx
 from bmt import Toolkit
 
@@ -156,3 +157,38 @@ def apply_ids(id_map: dict, message_dict: dict) -> None:
         for rnode in result["node_bindings"].values():
             for entry in rnode:
                 entry["id"] = id_map[entry["id"]]
+
+
+def merge_qedges(
+        message_dict1: dict,
+        message_dict2: dict,
+        merged_message_dict: dict = None
+        ) -> dict:
+    """Merge qedges: the keys must be the same and the values must be the same.
+    If a key is unique to one message, then the edge will be concatinated to
+    the new edges dictionary. If a particular key exists in both messages but
+    the values do not match, this will result in an error. """
+    if merged_message_dict is None:
+        merged_message_dict = copy.deepcopy(message_dict1)
+
+    qedges1 = message_dict1["message"]["query_graph"]["edges"]
+    qedges2 = message_dict2["message"]["query_graph"]["edges"]
+
+    new_qedges = {}
+    for qedge in qedges1:
+        if qedge in qedges2.keys():
+            if qedges1[qedge] == qedges2[qedge]:
+                new_qedges[qedge] = qedges1[qedge]
+            else:
+                raise ValueError(
+                    "Key exists in both messages but values do not match."
+                )
+        else:
+            new_qedges[qedge] = qedges1[qedge]
+
+    for qedge in qedges2:
+        if qedge not in new_qedges.keys():
+            new_qedges[qedge] = qedges2[qedge]
+
+    merged_message_dict["message"]["query_graph"]["edges"] = new_qedges
+    return merged_message_dict
