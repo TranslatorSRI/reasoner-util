@@ -165,7 +165,7 @@ def merge_qedges(
         merged_message_dict: dict = None
         ) -> dict:
     """Merge qedges: the keys must be the same and the values must be the same.
-    If a key is unique to one message, then the edge will be concatinated to
+    If a key is unique to one message, then the edge will be concatenated to
     the new edges dictionary. If a particular key exists in both messages but
     the values do not match, this will result in an error. """
     if merged_message_dict is None:
