@@ -1,0 +1,38 @@
+{
+    "message": {
+      "query_graph": {
+        "nodes": {},
+        "edges": {
+          "e0": {
+            "subject": "n0",
+            "object": "n1",
+            "predicates": [
+              "biolink:related_to"
+            ]
+          },
+          "e1": {
+            "subject": "n1",
+            "object": "n2",
+            "predicates": [
+                "biolink:affects_abundance_of",
+                "biolink:has_phenotype"
+            ]
+          },
+          "e2": {
+            "subject": "n2",
+            "object": "n3",
+            "predicates": [
+                "biolink:affects_expression_of"
+            ]
+          },
+          "eB": {
+            "subject": "n0",
+            "object": "n4",
+            "predicates": [
+                "biolink:related_to"
+            ]
+          }
+        }
+      }
+    }
+  }
