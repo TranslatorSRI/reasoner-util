@@ -159,36 +159,27 @@ def apply_ids(id_map: dict, message_dict: dict) -> None:
                 entry["id"] = id_map[entry["id"]]
 
 
-def merge_qedges(
-        message_dict1: dict,
-        message_dict2: dict,
-        merged_message_dict: dict = None
-        ) -> dict:
+def merge_qedges(qedges1: dict, qedges2: dict) -> dict:
     """Merge qedges: the keys must be the same and the values must be the same.
-    If a key is unique to one message, then the edge will be concatenated to
+    If a key is unique to one edges dict, then the edge will be concatenated to
     the new edges dictionary. If a particular key exists in both messages but
     the values do not match, this will result in an error. """
-    if merged_message_dict is None:
-        merged_message_dict = copy.deepcopy(message_dict1)
+    qedges1 = copy.deepcopy(qedges1)
+    new_edges = {}
 
-    qedges1 = message_dict1["message"]["query_graph"]["edges"]
-    qedges2 = message_dict2["message"]["query_graph"]["edges"]
+    for qedge_key, qedge_value in qedges2.items():
+        if qedge_key not in qedges1.keys():
+            new_edges[qedge_key] = copy.deepcopy(qedge_value)
 
-    new_qedges = {}
-    for qedge in qedges1:
-        if qedge in qedges2.keys():
-            if qedges1[qedge] == qedges2[qedge]:
-                new_qedges[qedge] = qedges1[qedge]
+    for qedge_key, qedge_value in qedges1.items():
+        if qedge_key in qedges2.keys():
+            if qedge_value == qedges2[qedge_key]:
+                new_edges[qedge_key] = qedge_value
             else:
                 raise ValueError(
                     "Key exists in both messages but values do not match."
                 )
         else:
-            new_qedges[qedge] = qedges1[qedge]
+            new_edges[qedge_key] = qedge_value
 
-    for qedge in qedges2:
-        if qedge not in new_qedges.keys():
-            new_qedges[qedge] = qedges2[qedge]
-
-    merged_message_dict["message"]["query_graph"]["edges"] = new_qedges
-    return merged_message_dict
+    return new_edges
