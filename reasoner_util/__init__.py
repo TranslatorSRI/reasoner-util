@@ -171,3 +171,17 @@ def merge_qedges(qedges1: dict, qedges2: dict) -> dict:
         elif qedge_value != new_edges[qedge_key]:
             raise ValueError("Key exists in both messages but values do not match.")
     return new_edges
+
+
+def merge_qnodes(qnodes1: dict, qnodes2: dict) -> dict:
+    """Merge qnodes: the keys must be the same and the values must be the same.
+    If a key is unique to one nodes dict, then the node will be concatenated to
+    the new nodes dictionary. If a particular key exists in both messages but
+    the values do not match, this will result in an error. """
+    new_nodes = copy.deepcopy(qnodes1)
+    for qnode_key, qnode_value in qnodes2.items():
+        if qnode_key not in new_nodes:
+            new_nodes[qnode_key] = copy.deepcopy(qnode_value)
+        elif qnode_value != new_nodes[qnode_key]:
+            raise ValueError("Key exists in both messages but values do not match.")
+    return new_nodes
