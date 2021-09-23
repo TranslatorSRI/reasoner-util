@@ -164,22 +164,10 @@ def merge_qedges(qedges1: dict, qedges2: dict) -> dict:
     If a key is unique to one edges dict, then the edge will be concatenated to
     the new edges dictionary. If a particular key exists in both messages but
     the values do not match, this will result in an error. """
-    qedges1 = copy.deepcopy(qedges1)
-    new_edges = {}
-
+    new_edges = copy.deepcopy(qedges1)
     for qedge_key, qedge_value in qedges2.items():
-        if qedge_key not in qedges1.keys():
+        if qedge_key not in new_edges:
             new_edges[qedge_key] = copy.deepcopy(qedge_value)
-
-    for qedge_key, qedge_value in qedges1.items():
-        if qedge_key in qedges2.keys():
-            if qedge_value == qedges2[qedge_key]:
-                new_edges[qedge_key] = qedge_value
-            else:
-                raise ValueError(
-                    "Key exists in both messages but values do not match."
-                )
-        else:
-            new_edges[qedge_key] = qedge_value
-
+        elif qedge_value != new_edges[qedge_key]:
+            raise ValueError("Key exists in both messages but values do not match.")
     return new_edges
