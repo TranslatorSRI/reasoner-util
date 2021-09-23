@@ -1,0 +1,34 @@
+{
+    "n0": {
+        "categories": [
+            "biolink:Entity"
+        ],
+        "ids": [
+            "CHEBI:23639"
+        ]
+    },
+    "n1": {
+        "categories": [
+            "biolink:Entity"
+        ],
+        "ids": [
+            "MONDO:0021107"
+        ]
+    },
+    "n2": {
+        "categories": [
+            "biolink:Entity"
+        ],
+        "ids": [
+            "MONDO:0024613"
+        ]
+    },
+    "nB": {
+        "categories": [
+            "biolink:Entity"
+        ],
+        "ids": [
+            "EFO:1001454"
+        ]
+    }
+}
