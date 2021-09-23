@@ -1,5 +1,6 @@
 """Test merging."""
 import json
+import pytest
 
 from reasoner_util import merge_categories, merge_ids
 from reasoner_util import merge_qedges
@@ -58,3 +59,14 @@ def test_merge_qedges():
         correct_merged_qedges = json.load(file)
 
     assert merged_qedges == correct_merged_qedges
+
+
+def test_merge_qedges_error():
+    """Test merge_qedges"""
+    with open("tests/test_jsons/test_merge_qedges1.json", "r") as file:
+        qedges1 = json.load(file)
+    with open("tests/test_jsons/test_merge_qedges2_w_error.json", "r") as file:
+        qedges2 = json.load(file)
+
+    with pytest.raises(ValueError):
+        merge_qedges(qedges1, qedges2)
