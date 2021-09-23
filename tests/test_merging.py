@@ -2,8 +2,8 @@
 import json
 import pytest
 
-from reasoner_util import merge_categories, merge_ids
-from reasoner_util import merge_qedges
+from reasoner_util import (merge_categories, merge_ids, merge_qedges,
+                           merge_qnodes)
 
 from .util import unordered_lists_equal
 
@@ -70,3 +70,29 @@ def test_merge_qedges_error():
 
     with pytest.raises(ValueError):
         merge_qedges(qedges1, qedges2)
+
+
+def test_merge_qnodes():
+    """Test merge_qnodes"""
+    with open("tests/test_jsons/test_merge_qnodes1.json", "r") as file:
+        qnodes1 = json.load(file)
+    with open("tests/test_jsons/test_merge_qnodes2.json", "r") as file:
+        qnodes2 = json.load(file)
+
+    merged_qnodes = merge_qnodes(qnodes1, qnodes2)
+
+    with open("tests/test_jsons/test_merge_qnodes_success.json", "r") as file:
+        correct_merged_qnodes = json.load(file)
+
+    assert merged_qnodes == correct_merged_qnodes
+
+
+def test_merge_qnodes_error():
+    """Test merge_qnodes"""
+    with open("tests/test_jsons/test_merge_qnodes1.json", "r") as file:
+        qnodes1 = json.load(file)
+    with open("tests/test_jsons/test_merge_qnodes2_w_error.json", "r") as file:
+        qnodes2 = json.load(file)
+
+    with pytest.raises(ValueError):
+        merge_qnodes(qnodes1, qnodes2)
