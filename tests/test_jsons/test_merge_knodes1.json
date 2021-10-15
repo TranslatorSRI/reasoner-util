@@ -1,0 +1,42 @@
+{
+    "CHEBI:23639": {
+        "categories": [
+            "biolink:ChemicalSubstance",
+            "biolink:MolecularEntity",
+            "biolink:BiologicalEntity",
+            "biolink:NamedThing",
+            "biolink:Entity"
+        ],
+        "attributes": [
+            {
+                "attribute_type_id": "",
+                "value": null,
+                "value_type_id": "EDAM:data_0006",
+                "original_attribute_name": "synonyms",
+                "value_url": null,
+                "attribute_source": null,
+                "description": null
+            }
+        ]
+    },
+    "MONDO:0005010": {
+        "categories": [
+            "biolink:Disease",
+            "biolink:DiseaseOrPhenotypicFeature",
+            "biolink:BiologicalEntity",
+            "biolink:NamedThing",
+            "biolink:Entity"
+        ],
+        "attributes": [
+            {
+                "attribute_type_id": "biolink:Attribute",
+                "value": null,
+                "value_type_id": "EDAM:data_0006",
+                "original_attribute_name": "synonyms",
+                "value_url": null,
+                "attribute_source": null,
+                "description": null
+            }
+        ]
+    }
+  }

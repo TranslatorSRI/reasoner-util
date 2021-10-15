@@ -185,3 +185,21 @@ def merge_qnodes(qnodes1: dict, qnodes2: dict) -> dict:
         elif qnode_value != new_nodes[qnode_key]:
             raise ValueError("Key exists in both messages but values do not match.")
     return new_nodes
+
+
+def merge_knodes(knodes1: dict, knodes2: dict) -> dict:
+    """To merge knodes the keys must be the same. The knode values are merged
+    by finding the union of their categories list and the union of their
+    attributes list."""
+    new_nodes = copy.deepcopy(knodes1)
+    for knode_key, knode_value in knodes2.items():
+        if knode_key not in new_nodes:
+            new_nodes[knode_key] = copy.deepcopy(knode_value)
+        elif knode_value != new_nodes[knode_key]:
+            for category in knode_value["categories"]:
+                if category not in new_nodes[knode_key]["categories"]:
+                    new_nodes[knode_key]["categories"] += copy.deepcopy(knode_value["categories"])
+            for attribute in knode_value["attributes"]:
+                if attribute not in new_nodes[knode_key]["attributes"]:
+                    new_nodes[knode_key]["attributes"] += copy.deepcopy(knode_value["attributes"])
+    return new_nodes

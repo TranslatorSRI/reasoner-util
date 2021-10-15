@@ -3,7 +3,7 @@ import json
 import pytest
 
 from reasoner_util import (merge_categories, merge_ids, merge_qedges,
-                           merge_qnodes)
+                           merge_qnodes, merge_knodes)
 
 from .util import unordered_lists_equal
 
@@ -96,3 +96,20 @@ def test_merge_qnodes_error():
 
     with pytest.raises(ValueError):
         merge_qnodes(qnodes1, qnodes2)
+
+
+def test_merge_knodes():
+    """Test merge_knodes"""
+    with open("tests/test_jsons/test_merge_knodes1.json", "r") as file:
+        knodes1 = json.load(file)
+    with open("tests/test_jsons/test_merge_knodes2.json", "r") as file:
+        knodes2 = json.load(file)
+
+    merged_knodes = merge_knodes(knodes1, knodes2)
+    with open("output.json", "w") as file:
+        json.dump(merged_knodes, file)
+
+    with open("tests/test_jsons/test_merge_knodes_success.json", "r") as file:
+        correct_merged_knodes = json.load(file)
+
+    assert merged_knodes == correct_merged_knodes
