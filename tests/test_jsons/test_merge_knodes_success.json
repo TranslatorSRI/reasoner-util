@@ -1,11 +1,11 @@
 {
     "CHEBI:23639": {
         "categories": [
-            "biolink:ChemicalSubstance",
-            "biolink:MolecularEntity",
             "biolink:BiologicalEntity",
-            "biolink:NamedThing",
-            "biolink:Entity"
+            "biolink:ChemicalSubstance",
+            "biolink:Entity",
+            "biolink:MolecularEntity",
+            "biolink:NamedThing"
         ],
         "attributes": [
             {
@@ -21,11 +21,11 @@
     },
     "MONDO:0005010": {
         "categories": [
+            "biolink:BiologicalEntity",
             "biolink:Disease",
             "biolink:DiseaseOrPhenotypicFeature",
-            "biolink:BiologicalEntity",
-            "biolink:NamedThing",
-            "biolink:Entity"
+            "biolink:Entity",
+            "biolink:NamedThing"
         ],
         "attributes": [
             {
