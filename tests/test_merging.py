@@ -106,8 +106,6 @@ def test_merge_knodes():
         knodes2 = json.load(file)
 
     merged_knodes = merge_knodes(knodes1, knodes2)
-    with open("output.json", "w") as file:
-        json.dump(merged_knodes, file)
 
     with open("tests/test_jsons/test_merge_knodes_success.json", "r") as file:
         correct_merged_knodes = json.load(file)
