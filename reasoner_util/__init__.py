@@ -191,7 +191,7 @@ def merge_attributes(
         knode1_attributes: List[dict],
         knode2_attributes: List[dict],
         in_place: bool = False
-        ) -> List[dict]:
+     ) -> List[dict]:
     """Find the union of the attributes lists in knowledge graph nodes that
     require merging. Note: in_place=True option is to merge the second
     knode attributes list into the first, rather than providing a third
