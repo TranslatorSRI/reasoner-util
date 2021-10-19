@@ -192,6 +192,8 @@ def merge_attributes(
     else:
         new_node_attributes = knode1_attributes
 
+    # attributes can be "Any" type and arbitrarily nested, which is why we took
+    # the long route instead of converting to sets and finding the union
     for attribute2 in knode2_attributes:
         if attribute2 not in new_node_attributes:
             new_node_attributes += [copy.deepcopy(attribute2)]
