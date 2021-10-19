@@ -203,7 +203,7 @@ def merge_attributes(
 
     for attribute2 in knode2_attributes:
         if attribute2 not in new_node_attributes:
-            new_node_attributes += copy.deepcopy(attribute2)
+            new_node_attributes += [copy.deepcopy(attribute2)]
     return new_node_attributes
 
 
