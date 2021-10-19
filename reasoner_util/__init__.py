@@ -188,10 +188,10 @@ def merge_qnodes(qnodes1: dict, qnodes2: dict) -> dict:
 
 
 def merge_attributes(
-        knode1_attributes: List[dict],
-        knode2_attributes: List[dict],
-        in_place: bool = False
-     ) -> List[dict]:
+    knode1_attributes: List[dict],
+    knode2_attributes: List[dict],
+    in_place: bool = False
+) -> List[dict]:
     """Find the union of the attributes lists in knowledge graph nodes that
     require merging. Note: in_place=True option is to merge the second
     knode attributes list into the first, rather than providing a third
@@ -217,13 +217,13 @@ def merge_knodes(knodes1: dict, knodes2: dict) -> dict:
             new_nodes[knode_key] = copy.deepcopy(knode_value)
             continue
         new_nodes[knode_key]["attributes"] = merge_attributes(
-                                                new_nodes[knode_key]["attributes"],
-                                                knode_value["attributes"],
-                                                in_place=True
-                                             )
+            new_nodes[knode_key]["attributes"],
+            knode_value["attributes"],
+            in_place=True
+        )
         new_nodes[knode_key]["categories"] = merge_iterables(
-                                                new_nodes[knode_key]["categories"],
-                                                knode_value["categories"]
-                                             )
+            new_nodes[knode_key]["categories"],
+            knode_value["categories"]
+        )
         new_nodes[knode_key]["categories"].sort()
     return new_nodes
