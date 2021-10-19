@@ -25,8 +25,7 @@ def get_preferred_ids(curies: List[str]) -> List[str]:
     )
     response_dict = response.json()
     preferred_ids = [
-        response_dict[curie]["id"]["identifier"]
-        for curie in curies
+        response_dict[curie]["id"]["identifier"] for curie in curies
     ]
     return preferred_ids
 
@@ -77,11 +76,7 @@ def strip_descendants(items: List[str]) -> List[str]:
             formatted=True,
         )
     }
-    return [
-        item
-        for item in items
-        if item not in descendants
-    ]
+    return [item for item in items if item not in descendants]
 
 
 def strip_ancestors(items: List[str]) -> List[str]:
@@ -95,11 +90,7 @@ def strip_ancestors(items: List[str]) -> List[str]:
             formatted=True,
         )
     }
-    return [
-        item
-        for item in items
-        if item not in ancestors
-    ]
+    return [item for item in items if item not in ancestors]
 
 
 def get_all_ids(message_dict: dict) -> List[str]:
@@ -142,13 +133,9 @@ def apply_ids(id_map: dict, message_dict: dict) -> None:
     for qnode in qgraph["nodes"].values():
         if qnode["ids"] is None:
             continue
-        qnode["ids"] = [
-            id_map[item]
-            for item in qnode["ids"]
-        ]
+        qnode["ids"] = [id_map[item] for item in qnode["ids"]]
     kgraph["nodes"] = {
-        id_map[knode_id]: knode
-        for knode_id, knode in kgraph["nodes"].items()
+        id_map[knode_id]: knode for knode_id, knode in kgraph["nodes"].items()
     }
     for edge in kgraph["edges"].values():
         edge["subject"] = id_map[edge["subject"]]
@@ -163,13 +150,15 @@ def merge_qedges(qedges1: dict, qedges2: dict) -> dict:
     """Merge qedges: the keys must be the same and the values must be the same.
     If a key is unique to one edges dict, then the edge will be concatenated to
     the new edges dictionary. If a particular key exists in both messages but
-    the values do not match, this will result in an error. """
+    the values do not match, this will result in an error."""
     new_edges = copy.deepcopy(qedges1)
     for qedge_key, qedge_value in qedges2.items():
         if qedge_key not in new_edges:
             new_edges[qedge_key] = copy.deepcopy(qedge_value)
         elif qedge_value != new_edges[qedge_key]:
-            raise ValueError("Key exists in both messages but values do not match.")
+            raise ValueError(
+                "Key exists in both messages but values do not match."
+            )
     return new_edges
 
 
@@ -177,20 +166,22 @@ def merge_qnodes(qnodes1: dict, qnodes2: dict) -> dict:
     """Merge qnodes: the keys must be the same and the values must be the same.
     If a key is unique to one nodes dict, then the node will be concatenated to
     the new nodes dictionary. If a particular key exists in both messages but
-    the values do not match, this will result in an error. """
+    the values do not match, this will result in an error."""
     new_nodes = copy.deepcopy(qnodes1)
     for qnode_key, qnode_value in qnodes2.items():
         if qnode_key not in new_nodes:
             new_nodes[qnode_key] = copy.deepcopy(qnode_value)
         elif qnode_value != new_nodes[qnode_key]:
-            raise ValueError("Key exists in both messages but values do not match.")
+            raise ValueError(
+                "Key exists in both messages but values do not match."
+            )
     return new_nodes
 
 
 def merge_attributes(
     knode1_attributes: List[dict],
     knode2_attributes: List[dict],
-    in_place: bool = False
+    in_place: bool = False,
 ) -> List[dict]:
     """Find the union of the attributes lists in knowledge graph nodes that
     require merging. Note: in_place=True option is to merge the second
@@ -219,11 +210,10 @@ def merge_knodes(knodes1: dict, knodes2: dict) -> dict:
         new_nodes[knode_key]["attributes"] = merge_attributes(
             new_nodes[knode_key]["attributes"],
             knode_value["attributes"],
-            in_place=True
+            in_place=True,
         )
         new_nodes[knode_key]["categories"] = merge_iterables(
-            new_nodes[knode_key]["categories"],
-            knode_value["categories"]
+            new_nodes[knode_key]["categories"], knode_value["categories"]
         )
         new_nodes[knode_key]["categories"].sort()
     return new_nodes
