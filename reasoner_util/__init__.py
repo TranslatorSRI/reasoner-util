@@ -219,3 +219,55 @@ def merge_knodes(knodes1: dict, knodes2: dict) -> dict:
         )
         new_nodes[knode_key]["categories"].sort()
     return new_nodes
+
+
+def merge_kedges(kedges1: dict, kedges2: dict) -> dict:
+    """Knowledge graph edges should be merged iff their subjects, predicates,
+    objects, and original_knowledge_source are identical. If an edge does not
+    have an "attribute_type_id":"biolink:original_knowledge_source" attribute,
+    then it will never be equivalent to another edge. Knowledge graph edge
+    values should be merged by finding the union of their attributes lists"""
+    new_edges = copy.deepcopy(kedges1)
+    new_edges_sub_obj_pred = {
+        item_key: [item["subject"], item["object"], item["predicate"]]
+        for item_key, item in new_edges.items()
+    }
+    for i, kedge2 in enumerate(kedges2.values()):
+        orig_knowledge_src2 = [
+            attr["value"]
+            for attr in kedge2["attributes"]
+            if attr["attribute_type_id"] == "biolink:original_knowledge_source"
+        ]
+        kedge2_sub_obj_pred = [
+            kedge2["subject"],
+            kedge2["object"],
+            kedge2["predicate"],
+        ]
+        if (
+            kedge2_sub_obj_pred not in new_edges_sub_obj_pred.values()
+            or len(orig_knowledge_src2) == 0
+        ):
+            new_edges[str(i)] = copy.deepcopy(kedge2)
+            continue
+        new_edges_matches = [
+            k
+            for k, v in new_edges_sub_obj_pred.items()
+            if v == kedge2_sub_obj_pred
+        ]
+        for key in new_edges_matches:
+            orig_knowledge_src_new = [
+                attr["value"]
+                for attr in new_edges[key]["attributes"]
+                if attr["attribute_type_id"]
+                == "biolink:original_knowledge_source"
+            ]
+            if orig_knowledge_src_new == orig_knowledge_src2:
+                new_edges[key]["attributes"] = merge_attributes(
+                    new_edges[key]["attributes"],
+                    kedge2["attributes"],
+                    in_place=True,
+                )
+            else:
+                new_edges[str(i)] = copy.deepcopy(kedge2)
+
+    return new_edges

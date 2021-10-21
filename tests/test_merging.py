@@ -2,8 +2,14 @@
 import json
 import pytest
 
-from reasoner_util import (merge_categories, merge_ids, merge_qedges,
-                           merge_qnodes, merge_knodes)
+from reasoner_util import (
+    merge_categories,
+    merge_ids,
+    merge_qedges,
+    merge_qnodes,
+    merge_knodes,
+    merge_kedges,
+)
 
 from .util import unordered_lists_equal
 
@@ -111,3 +117,18 @@ def test_merge_knodes():
         correct_merged_knodes = json.load(file)
 
     assert merged_knodes == correct_merged_knodes
+
+
+def test_merge_kedges():
+    """Test merge_kedges"""
+    with open("tests/test_jsons/test_merge_kedges1.json", "r") as file:
+        kedges1 = json.load(file)
+    with open("tests/test_jsons/test_merge_kedges2.json", "r") as file:
+        kedges2 = json.load(file)
+
+    merged_kedges = merge_kedges(kedges1, kedges2)
+
+    with open("tests/test_jsons/test_merge_kedges_success.json", "r") as file:
+        correct_merged_kedges = json.load(file)
+
+    assert merged_kedges == correct_merged_kedges
