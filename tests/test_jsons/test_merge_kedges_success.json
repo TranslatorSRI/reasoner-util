@@ -1,17 +1,4 @@
 {
-    "1": {
-        "subject": "curie3",
-        "object": "curie4",
-        "predicate": "pred2",
-        "attributes": [
-            {
-                "attribute_type_id": "biolink:publications",
-                "value": [
-                    "pubmedID"
-                ]
-            }
-        ]
-    },
     "15450330": {
         "subject": "curie1",
         "object": "curie2",
@@ -45,6 +32,19 @@
             {
                 "attribute_type_id": "biolink:SOMETHING",
                 "value": "SOMETHING"
+            }
+        ]
+    },
+    "15450333": {
+        "subject": "curie3",
+        "object": "curie4",
+        "predicate": "pred2",
+        "attributes": [
+            {
+                "attribute_type_id": "biolink:publications",
+                "value": [
+                    "pubmedID"
+                ]
             }
         ]
     }
