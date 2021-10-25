@@ -1,0 +1,51 @@
+{
+    "15450330": {
+        "subject": "curie1",
+        "object": "curie2",
+        "predicate": "pred1",
+        "attributes": [
+            {
+                "attribute_type_id": "biolink:original_knowledge_source",
+                "value": "infores:aragorn"
+            },
+            {
+                "attribute_type_id": "biolink:publications",
+                "value": [
+                    "pubmedID"
+                ]
+            },
+            {
+                "attribute_type_id": "biolink:aggregator_knowledge_source",
+                "value": "infores:rtx-kg2"
+            }
+        ]
+    },
+    "15450331": {
+        "subject": "curie3",
+        "object": "curie4",
+        "predicate": "pred2",
+        "attributes": [
+            {
+                "attribute_type_id": "biolink:original_knowledge_source",
+                "value": "infores:aragorn"
+            },
+            {
+                "attribute_type_id": "biolink:SOMETHING",
+                "value": "SOMETHING"
+            }
+        ]
+    },
+    "15450333": {
+        "subject": "curie3",
+        "object": "curie4",
+        "predicate": "pred2",
+        "attributes": [
+            {
+                "attribute_type_id": "biolink:publications",
+                "value": [
+                    "pubmedID"
+                ]
+            }
+        ]
+    }
+}

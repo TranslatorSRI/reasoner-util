@@ -3,6 +3,7 @@ from typing import Hashable, Iterable, List, TypeVar
 import copy
 import httpx
 from bmt import Toolkit
+from typing import Tuple, Optional
 
 T = TypeVar("T", bound=Hashable)
 
@@ -219,3 +220,52 @@ def merge_knodes(knodes1: dict, knodes2: dict) -> dict:
         )
         new_nodes[knode_key]["categories"].sort()
     return new_nodes
+
+
+def get_match_key(kedge: dict) -> Tuple[str, str, str, Optional[str]]:
+    """Create a tuple containing subject, object, predicate, and the value of
+    the attribute whose type id is original_knowledge_source if such an
+    attribute exists for the edge."""
+    k_subject = kedge["subject"]
+    k_object = kedge["object"]
+    k_predicate = kedge["predicate"]
+    try:
+        k_attributes_w_orig_src = [
+            attribute for attribute in kedge["attributes"]
+            if attribute["attribute_type_id"] == "biolink:original_knowledge_source"
+        ]
+        k_orig_src = k_attributes_w_orig_src[0]["value"]
+    except IndexError:
+        k_orig_src = None
+    return (k_subject, k_object, k_predicate, k_orig_src)
+
+
+def merge_kedges(kedges1: dict, kedges2: dict) -> dict:
+    """Knowledge graph edges should be merged iff their subjects, predicates,
+    objects, and original_knowledge_source are identical. If an edge does not
+    have an "attribute_type_id":"biolink:original_knowledge_source" attribute,
+    then it will never be equivalent to another edge. Knowledge graph edge
+    values should be merged by finding the union of their attributes lists"""
+    new_edges = copy.deepcopy(kedges1)
+    new_edges_summary = {k: get_match_key(v) for k, v in new_edges.items()}
+    kedges2_summary = {k: get_match_key(v) for k, v in kedges2.items()}
+
+    for key, kedge2 in kedges2.items():
+        if (
+            kedges2_summary[key] not in new_edges_summary.values()
+            or kedges2_summary[key][3] is None
+        ):
+            new_edges[key] = copy.deepcopy(kedge2)
+            continue
+        new_edges_matches = {
+            k: v for k, v in new_edges_summary.items()
+            if v == kedges2_summary[key]
+        }
+
+        for k in new_edges_matches.keys():
+            new_edges[k]["attributes"] = merge_attributes(
+                new_edges[k]["attributes"],
+                kedge2["attributes"],
+                in_place=True
+            )
+    return new_edges
